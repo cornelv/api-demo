@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: mongo:3
+    env_file: .env
+    ports:
+      - "27017:27017"
+  web:
+    build: .
+    command: sleep 5d
+    # this is for ipdb to work
+    # use this command to connect to container: docker exec -ti apidemo_web_1 bash
+    #command: python api.py
+    volumes:
+      - .:/code
+    env_file: .env
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    
